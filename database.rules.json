@@ -1,0 +1,66 @@
+{
+	"rules": {
+		".read": false,
+		".write": false,
+		"questionBanks": {
+			"$courseId": {
+				".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true && root.child('courses').child(auth.uid).child($courseId).exists()"
+			}
+		},
+		"courses": {
+			"$uid": {
+				".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true"
+			}
+		},
+		"courseLectures": {
+			"$uid": {
+				".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true"
+			}
+		},
+		"admissions": {
+			"$id": {
+				"studentQuestions": {
+					".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true && auth.uid === root.child('sessions').child($id).child('instructorUid').val()",
+					"$uid": {
+						".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && root.child('admissions').child($id).child('state').val() === 'open' && root.child('admissions').child($id).child('members').child($uid).exists()"
+					}
+				},
+				"broadcastControl": {
+					".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true && auth.uid === root.child('sessions').child($id).child('instructorUid').val()"
+				},
+				"codeSubmissions": {
+					"$uid": {
+						"accepted": {
+							".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && root.child('admissions').child($id).child('state').val() === 'open' && root.child('admissions').child($id).child('members').child($uid).exists()"
+						}
+					}
+				},
+				"questionActivity": {
+					"$question": {
+						"publicStats": {
+							".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && ((auth.token.instructor === true && auth.uid === root.child('sessions').child($id).child('instructorUid').val()) || (root.child('admissions').child($id).child('state').val() === 'open' && root.child('admissions').child($id).child('members').child(auth.uid).exists() && root.child('admissions').child($id).child('live').child('reveals').child($question).child('statistics').val() === true))"
+						},
+						"responses": {
+							"$uid": {
+								"accepted": {
+									".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && root.child('admissions').child($id).child('state').val() === 'open' && root.child('admissions').child($id).child('members').child($uid).exists()"
+								}
+							}
+						}
+					}
+				},
+				"control": {
+					".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true && auth.uid === root.child('sessions').child($id).child('instructorUid').val()"
+				},
+				"live": {
+					".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && data.parent().child('state').val() === 'open' && data.parent().child('members').child(auth.uid).exists()"
+				}
+			}
+		},
+		"sessions": {
+			"$sessionId": {
+				".read": "auth != null && auth.token.email_verified === true && auth.token.email != null && auth.token.firebase.sign_in_provider === 'google.com' && auth.token.instructor === true && auth.uid === data.child('instructorUid').val()"
+			}
+		}
+	}
+}

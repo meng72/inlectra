@@ -1,0 +1,6 @@
+Type,Title,Points,Question,Answer,Choice1,Choice2,Choice3,Choice4,Choice5
+MC,,1,"Which value is even?",2,1,2,3,5,
+MR,,1,"Which records stay private? Select all that apply.",1,"Student submissions","Published question","Aggregate count","Lecture title",
+TF,,1,"A revision can award a second participation point.",0,TRUE,FALSE,,,
+NUM,,1,"How many participation points can one graded question award?",1,,,,,
+ESSAY,,0,"What part of this synthetic rehearsal needs clarification?",____,,,,,
